@@ -4,6 +4,7 @@ import time
 import pygame
 import sys
 import subprocess
+import argparse
 
 user = subprocess.check_output(['whoami'])
 user = str(user).rstrip()
@@ -24,8 +25,12 @@ def start_timer(count):
        time.sleep(60)
        count -= 1
 
-if len(sys.argv) == 1:
-   start_timer(25)
-elif sys.argv[1] == "-n":
-   count = int(sys.argv[2])
+parser = argparse.ArgumentParser(description="Pomodoro Technique")
+parser.add_argument('-n', type=str, help="Number of minutes", required=False)
+cmdargs = parser.parse_args()
+
+if int(cmdargs.n) == 1:
+   count = int(cmdargs.n)
    start_timer(count)
+else:
+   start_timer(25)
